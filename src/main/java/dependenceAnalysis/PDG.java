@@ -1,8 +1,8 @@
 package dependenceAnalysis;
 
 import org.objectweb.asm.tree.AbstractInsnNode;
-import util.cfg.Graph;
-import util.cfg.Node;
+import dependenceAnalysis.util.cfg.Graph;
+import dependenceAnalysis.util.cfg.Node;
 
 import java.util.Collection;
 import java.util.HashSet;

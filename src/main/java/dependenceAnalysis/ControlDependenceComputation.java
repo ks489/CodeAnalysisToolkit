@@ -2,10 +2,10 @@ package dependenceAnalysis;
 
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.analysis.AnalyzerException;
-import util.DominanceTreeGenerator;
-import util.cfg.CFGExtractor;
-import util.cfg.Graph;
-import util.cfg.Node;
+import dependenceAnalysis.util.DominanceTreeGenerator;
+import dependenceAnalysis.util.cfg.CFGExtractor;
+import dependenceAnalysis.util.cfg.Graph;
+import dependenceAnalysis.util.cfg.Node;
 
 import java.util.Collection;
 import java.util.HashSet;

@@ -3,10 +3,10 @@ package dependenceAnalysis;
 import br.usp.each.saeg.asm.defuse.Variable;
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.analysis.AnalyzerException;
-import util.DataFlowAnalysis;
-import util.cfg.CFGExtractor;
-import util.cfg.Graph;
-import util.cfg.Node;
+import dependenceAnalysis.util.DataFlowAnalysis;
+import dependenceAnalysis.util.cfg.CFGExtractor;
+import dependenceAnalysis.util.cfg.Graph;
+import dependenceAnalysis.util.cfg.Node;
 
 import java.util.Collection;
 import java.util.HashSet;

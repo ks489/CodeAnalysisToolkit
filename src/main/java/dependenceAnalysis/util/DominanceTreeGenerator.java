@@ -2,9 +2,9 @@ package dependenceAnalysis.util;
 
 import org.objectweb.asm.tree.MethodNode;
 import org.objectweb.asm.tree.analysis.AnalyzerException;
-import util.cfg.CFGExtractor;
-import util.cfg.Graph;
-import util.cfg.Node;
+import dependenceAnalysis.util.cfg.CFGExtractor;
+import dependenceAnalysis.util.cfg.Graph;
+import dependenceAnalysis.util.cfg.Node;
 
 import java.io.IOException;
 import java.util.*;
