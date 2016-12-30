@@ -1,0 +1,18 @@
+Read all the code in one hour
+Skim the documentation
+Do a mock installation
+Analyze the Persistent Data (Check to see if this applies to this project)
+Speculate about the design (This might be time consuming)
+Study the Exceptional Entities (This is about the metrics we use static and dynamic)
+
+Refactor to understand (This might be time consuming)
+Step through the execution
+Look for the contracts (Not exactly sure what this is)
+
+
+Skim the documentation
+I went to their website about about the product which gives me a basic understanding of the system and what it does,
+http://www.jfree.org/jfreechart/
+I also had a quick skim on the API documentation
+I also had looked at the readme file in the project
+

@@ -14,8 +14,6 @@ import java.util.List;
  */
 public class TablePrinter {
 
-
-
     public static void printRelations(double[][] scores, File target, List<File> files) throws IOException {
         FileWriter fw = new FileWriter(target);
         CSVPrinter csvPrinter = new CSVPrinter(fw, CSVFormat.EXCEL);
