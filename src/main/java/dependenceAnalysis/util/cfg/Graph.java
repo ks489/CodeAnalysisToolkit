@@ -15,7 +15,6 @@ public class Graph {
         Node.sNextId = 1;
 		decisions = new HashMap<DefaultEdge, Boolean>();
 		graph = new DirectedMultigraph<Node, DefaultEdge>(new ClassBasedEdgeFactory<Node, DefaultEdge>(DefaultEdge.class));
-
 	}
 	
 	public void addNode(Node n){
@@ -56,7 +55,6 @@ public class Graph {
 			return decisions.get(cfgEdge);
 		}
 	}
-
 
 	public Set<Node> getPredecessors(Node a){
 		Set<Node> preds = new HashSet<Node>();
@@ -105,7 +103,6 @@ public class Graph {
 		dotString+="}";
 		return dotString;
 	}
-
 
 	/**
 	 * Return all *transitive* successors of m - i.e. any instructions
