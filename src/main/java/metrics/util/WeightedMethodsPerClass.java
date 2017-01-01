@@ -23,16 +23,14 @@ public class WeightedMethodsPerClass {
 	 * @param A map with all the cyclomatic complexity scores for each method within a given class
 	 * @return A sum of all cyclomatic complexity scores for a given class
      */
-	protected static int GetWeightedMethodPerClass(Map<String, Integer> ccMap) {
+	public static int GetWeightedMethodPerClass(Map<String, Integer> ccMap) {
 		int totalValue = 0;
 		Iterator it = ccMap.entrySet().iterator();
 	    while (it.hasNext()) {
 	        Map.Entry pair = (Map.Entry)it.next();
-	        if(pair.getValue().equals(true)){
-	        	System.out.println(pair.getKey() + " = " + pair.getValue());
-	        	int num = Integer.parseInt((String) pair.getValue());
-	        	totalValue = totalValue + num;
-	        }
+        	//System.out.println(pair.getKey() + " = " + pair.getValue());
+        	int num = (Integer)pair.getValue();
+        	totalValue = totalValue + num;
 	        it.remove(); 
 	    }
 	    return totalValue;
