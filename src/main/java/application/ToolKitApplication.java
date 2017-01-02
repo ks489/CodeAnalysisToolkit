@@ -20,22 +20,28 @@ import metrics.util.WeightedMethodsPerClass;
 public class ToolKitApplication {
 	
 	List<File> files;
-    String suffix = ".class";
-    String rootDirectory = "/Users/AppleZa-Laptop/Projects/University/co7506/jfreechart-fse/target/classes";
+	//String suffix = "";
+    String suffixClass = ".class";
+    String suffixJava = ".java";
+    //Class root directory
+    String rootDirectoryClass = "/Users/AppleZa-Laptop/Projects/University/co7506/jfreechart-fse/target/classes";
+    
+    //Java root directory
+    String rootDirectoryJava = "/Users/AppleZa-Laptop/Projects/University/co7506/jfreechart-fse/src/main/java";
+    
     String outputDirectory = "./outputfiles/";
 	
 	public List<File> GetAllClasses(File root, String suffix){
 		files = new ArrayList<File>();
-        this.suffix = suffix;
-        populateFiles(root);
+        populateFiles(root, suffix);
         return files;
 	}
 	
-    private void populateFiles(File root) {
+    private void populateFiles(File root, String suffix) {
         ArrayList<File> files = new ArrayList<File>(Arrays.asList(root.listFiles()));
         for(File f: files) {
             if(f.isDirectory())
-                populateFiles(f);
+                populateFiles(f, suffix);
             else if(f.getName().endsWith(suffix)){
                 this.files.add(f);
             }
@@ -43,17 +49,16 @@ public class ToolKitApplication {
     }
 	
 	public static void main(String[] args) throws IOException{
+		System.out.println("Analysis Started");
 		ToolKitApplication app = new ToolKitApplication();
 		
 		//Get all classes
-		File root = new File(app.rootDirectory);
-		List<File> files = app.GetAllClasses(root, app.suffix);
+		File rootClass = new File(app.rootDirectoryClass);
+		List<File> filesClass = app.GetAllClasses(rootClass, app.suffixClass);
 		
 		Map<String, Integer> weightedMap = new HashMap<String, Integer>();
 		//Get all weighted methods per class
-		for (File file : files) {
-			//System.out.println(file.getName());
-			//System.out.println(file.getPath());
+		for (File file : filesClass) {
 			Map<String, Integer> ccMap = CyclomaticComplexity.GetAllCyclomaticComplexityPerClass(file.getPath());
 			weightedMap.put(file.getName(), WeightedMethodsPerClass.GetWeightedMethodPerClass(ccMap));
 			//System.out.println("Weighted Value " + WeightedMethodsPerClass.GetWeightedMethodPerClass(ccMap));
@@ -63,25 +68,28 @@ public class ToolKitApplication {
 		String[] headers = new String[] { "Class","WMPC"};
 		
 		CSVConverter.convertMapToCSV(headers, weightedMap, "WeightedMethodsPerClass", app.outputDirectory);
-		
-		/*@Test
-	    public void testComparisonMatrix() throws IOException {
-	        File root = new File(pathToSourceDirectory);
-	        DuplicateDetector dd = new DuplicateDetector(root,".java");
-	        double[][] comparisonMatrix = dd.fileComparison(true);
-	        TablePrinter.printRelations(comparisonMatrix,new File("fileComparisons.csv"),dd.getFiles());
-	    }
+			
+		//testComparisonMatrix
+		File rootJava = new File(app.rootDirectoryJava);
+		DuplicateDetector dd = new DuplicateDetector(rootJava, app.suffixJava);
+        double[][] comparisonMatrix = dd.fileComparison(true);
+        TablePrinter.printRelations(comparisonMatrix,new File(app.outputDirectory +"fileComparisons.csv"),dd.getFiles());
+        
 
-	    @Test
-	    public void testDetailedComparisonMatrix() throws IOException {
-	        File from = new File(pathToFileA);
-	        File to = new File(pathToFileB);
-	        FileComparator fc = new FileComparator(from,to);
-	        boolean[][] comparisonMatrix = fc.detailedCompare();
-	        TablePrinter.printRelations(comparisonMatrix,new File("detailedComparisons.csv"));
-	    }*/
+        String pathToSourceDirectory; // e.g. "/Users/neilwalkinshaw/Documents/Research/Software/SubjectSystems/commons-compress/commons-compress/src/main"
+        String pathToFileA = ""; //e.g. "/Users/neilwalkinshaw/Documents/Research/Software/SubjectSystems/commons-compress/commons-compress/src/main/java/org/apache/commons/compress/archivers/zip/X0015_CertificateIdForFile.java"
+        String pathToFileB = "";//e.g. ""/Users/neilwalkinshaw/Documents/Research/Software/SubjectSystems/commons-compress/commons-compress/src/main/java/org/apache/commons/compress/archivers/zip/X0016_CertificateIdForCentralDirectory.java"
+
+
+        //testDetailedComparisonMatrix
+        //File from = new File(pathToFileA);
+        //File to = new File(pathToFileB);
+        //FileComparator fc = new FileComparator(from,to);
+        //boolean[][] comparisonMatrix1 = fc.detailedCompare();
+        //TablePrinter.printRelations(comparisonMatrix1,new File("detailedComparisons.csv"));
+
 		
-		System.out.println("Ended Analysis");
+		System.out.println("Analysis Ended");
 	}
 	
 	
