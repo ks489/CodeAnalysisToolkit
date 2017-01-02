@@ -1,4 +1,4 @@
 Find out largest classes (Lines of code)
 Find out most complex classes (Cyclomatic Complexity) DONE and in csv format
-Find out duplicate code
+Find out duplicate code (Got the duplication matrix on file comparison)
 Find out which classes gets used when executing the system (Dynamic Analysis)
