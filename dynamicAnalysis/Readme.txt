@@ -1,1 +1,3 @@
+ajc -cp ../aspectjrt.jar -outxml -outjar tmteTracer.jar TraceMethodTimeExecution.java
+
 java -javaagent:../Assignment3/CodeAnalysisToolkit/dynamicAnalysis/aspectjweaver.jar -cp ../Assignment3/CodeAnalysisToolkit/dynamicAnalysis/TraceMethodTimeExecution/tmteTracer.jar;target/classes/;target/test-classes/;../Assignment3/CodeAnalysisToolkit/dynamicAnalysis/junit-4.12.jar;../Assignment3/CodeAnalysisToolkit/dynamicAnalysis/hamcrest-core-1.3.jar org.junit.runner.JUnitCore org.jfree.chart.BarChartTest
