@@ -17,8 +17,8 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="var" path="M2_REPO/br/usp/each/saeg/asm-defuse/0.0.5/asm-defuse-0.0.5.jar" sourcepath="M2_REPO/br/usp/each/saeg/asm-defuse/0.0.5/asm-defuse-0.0.5-sources.jar"/>
-	<classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm-debug-all/5.1/asm-debug-all-5.1.jar"/>
+	<classpathentry kind="var" path="M2_REPO/br/usp/each/saeg/asm-defuse/0.0.5/asm-defuse-0.0.5.jar"/>
+	<classpathentry kind="var" path="M2_REPO/org/ow2/asm/asm-debug-all/5.1/asm-debug-all-5.1.jar" sourcepath="M2_REPO/org/ow2/asm/asm-debug-all/5.1/asm-debug-all-5.1-sources.jar"/>
 	<classpathentry kind="var" path="M2_REPO/br/usp/each/saeg/saeg-commons/0.0.5/saeg-commons-0.0.5.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/jgrapht/jgrapht-core/0.9.1/jgrapht-core-0.9.1.jar"/>
 	<classpathentry kind="var" path="M2_REPO/org/apache/commons/commons-csv/1.3/commons-csv-1.3.jar"/>

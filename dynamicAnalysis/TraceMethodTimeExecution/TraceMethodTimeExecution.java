@@ -29,7 +29,7 @@ aspect Trace{
 
 	}
 	
-	pointcut traceMethods() : (execution(* org.apache.commons.net..*(..))&& !cflow(within(Trace)));
+	pointcut traceMethods() : (execution(* org.jfree..*(..))&& !cflow(within(Trace)));
 	
 	before(): traceMethods(){
 		startTime = System.nanoTime();

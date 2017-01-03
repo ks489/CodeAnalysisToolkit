@@ -29,7 +29,7 @@ aspect Trace{
 		System.out.println("Quickly call Trump to build a wall around this error");
 	}
 
-	pointcut callMethods() : (call(* org.apache.commons.net..*(..))&& !cflow(within(Trace)));
+	pointcut callMethods() : (call(* org.jfree..*(..))&& !cflow(within(Trace)));
 
 	before(): callMethods(){
 		

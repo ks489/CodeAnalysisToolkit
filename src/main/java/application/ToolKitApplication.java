@@ -17,17 +17,23 @@ import fileComparison.TablePrinter;
 import metrics.util.CyclomaticComplexity;
 import metrics.util.WeightedMethodsPerClass;
 
+import dynamicAnalysis.util.*;
+
 public class ToolKitApplication {
 	
 	List<File> files;
 	//String suffix = "";
     String suffixClass = ".class";
     String suffixJava = ".java";
-    //Class root directory
-    String rootDirectoryClass = "/Users/AppleZa-Laptop/Projects/University/co7506/jfreechart-fse/target/classes";
+    //Class root directory for mac
+    //String rootDirectoryClass = "/Users/AppleZa-Laptop/Projects/University/co7506/jfreechart-fse/target/classes";
+    //Class root directory for windows
+    String rootDirectoryClass = "../../jfreechart-fse/target/classes";
     
-    //Java root directory
-    String rootDirectoryJava = "/Users/AppleZa-Laptop/Projects/University/co7506/jfreechart-fse/src/main/java";
+    //Java root directory for mac
+    //String rootDirectoryJava = "/Users/AppleZa-Laptop/Projects/University/co7506/jfreechart-fse/src/main/java";
+    //Java root directory for windows
+    String rootDirectoryJava = "../../jfreechart-fse/src/main/java";
     
     String outputDirectory = "./outputfiles/";
 	
@@ -47,8 +53,51 @@ public class ToolKitApplication {
             }
         }
     }
+    
+    private void PerformWeightedMethodsPerClassAnalysis(List<File> filesClass){
+    	try {
+    	int counter = 0;
+		System.out.println("Calculating Weighted Methods PerClass");
+		Map<String, Integer> weightedMap = new HashMap<String, Integer>();
+		//Get all weighted methods per class
+		for (File file : filesClass) {
+			Map<String, Integer> ccMap;
+			
+				ccMap = CyclomaticComplexity.GetAllCyclomaticComplexityPerClass(file.getPath());
+			
+			weightedMap.put(file.getName(), WeightedMethodsPerClass.GetWeightedMethodPerClass(ccMap));
+			counter++;
+			System.out.println(counter + " - Computed Weight Value For Class");
+			
+		}
+		
+		
+		//WMPC is weighted methods per class
+		System.out.println("Writing out WMPC to CSV file");
+		String[] headers = new String[] { "Class","WMPC"};
+		
+		CSVConverter.convertMapToCSV(headers, weightedMap, "WeightedMethodsPerClass", this.outputDirectory);
+    	} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
+    
+    private void PerformDuplicateFileAnalysis(){
+    	try {
+	    	System.out.println("Performing Duplicate File Analysis");
+			File rootJava = new File(this.rootDirectoryJava);
+			DuplicateDetector dd = new DuplicateDetector(rootJava, this.suffixJava);
+	        double[][] comparisonMatrix = dd.fileComparison(true);
+	        System.out.println("Writing out CSV file for Duplicate Files");
+       
+			TablePrinter.printRelations(comparisonMatrix,new File(this.outputDirectory +"fileComparisons.csv"),dd.getFiles());
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
 	
 	public static void main(String[] args) throws IOException{
+		//Run Reengineering Analysis (Static & Dynamic)
 		System.out.println("Analysis Started");
 		ToolKitApplication app = new ToolKitApplication();
 		
@@ -56,25 +105,11 @@ public class ToolKitApplication {
 		File rootClass = new File(app.rootDirectoryClass);
 		List<File> filesClass = app.GetAllClasses(rootClass, app.suffixClass);
 		
-		Map<String, Integer> weightedMap = new HashMap<String, Integer>();
-		//Get all weighted methods per class
-		for (File file : filesClass) {
-			Map<String, Integer> ccMap = CyclomaticComplexity.GetAllCyclomaticComplexityPerClass(file.getPath());
-			weightedMap.put(file.getName(), WeightedMethodsPerClass.GetWeightedMethodPerClass(ccMap));
-			//System.out.println("Weighted Value " + WeightedMethodsPerClass.GetWeightedMethodPerClass(ccMap));
-		}
+		//app.PerformWeightedMethodsPerClassAnalysis(filesClass);
 		
-		//WMPC is weighted methods per class
-		String[] headers = new String[] { "Class","WMPC"};
-		
-		CSVConverter.convertMapToCSV(headers, weightedMap, "WeightedMethodsPerClass", app.outputDirectory);
-			
+		//app.PerformDuplicateFileAnalysis();
+				
 		//testComparisonMatrix
-		File rootJava = new File(app.rootDirectoryJava);
-		DuplicateDetector dd = new DuplicateDetector(rootJava, app.suffixJava);
-        double[][] comparisonMatrix = dd.fileComparison(true);
-        TablePrinter.printRelations(comparisonMatrix,new File(app.outputDirectory +"fileComparisons.csv"),dd.getFiles());
-        
 
         String pathToSourceDirectory; // e.g. "/Users/neilwalkinshaw/Documents/Research/Software/SubjectSystems/commons-compress/commons-compress/src/main"
         String pathToFileA = ""; //e.g. "/Users/neilwalkinshaw/Documents/Research/Software/SubjectSystems/commons-compress/commons-compress/src/main/java/org/apache/commons/compress/archivers/zip/X0015_CertificateIdForFile.java"
@@ -88,6 +123,8 @@ public class ToolKitApplication {
         //boolean[][] comparisonMatrix1 = fc.detailedCompare();
         //TablePrinter.printRelations(comparisonMatrix1,new File("detailedComparisons.csv"));
 
+        //Run dynamic analysis
+        DynamicAnalysisTracer.RunDynamicAnalysis();
 		
 		System.out.println("Analysis Ended");
 	}
