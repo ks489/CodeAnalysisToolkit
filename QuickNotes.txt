@@ -16,3 +16,6 @@ http://www.jfree.org/jfreechart/
 I also had a quick skim on the API documentation
 I also had looked at the readme file in the project
 
+
+dot command
+dot -Tpdf methodCalls.dot -o methodCalls.pdf -Gsize=8

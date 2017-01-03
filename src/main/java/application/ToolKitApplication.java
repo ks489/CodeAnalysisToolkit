@@ -15,6 +15,7 @@ import fileComparison.DuplicateDetector;
 import fileComparison.FileComparator;
 import fileComparison.TablePrinter;
 import metrics.util.CyclomaticComplexity;
+import metrics.util.LinesOfCode;
 import metrics.util.WeightedMethodsPerClass;
 
 import dynamicAnalysis.util.*;
@@ -56,27 +57,26 @@ public class ToolKitApplication {
     
     private void PerformWeightedMethodsPerClassAnalysis(List<File> filesClass){
     	try {
-    	int counter = 0;
-		System.out.println("Calculating Weighted Methods PerClass");
-		Map<String, Integer> weightedMap = new HashMap<String, Integer>();
-		//Get all weighted methods per class
-		for (File file : filesClass) {
-			Map<String, Integer> ccMap;
+	    	int counter = 0;
+			System.out.println("Calculating Weighted Methods PerClass");
+			Map<String, Integer> weightedMap = new HashMap<String, Integer>();
+			//Get all weighted methods per class
+			for (File file : filesClass) {
+				Map<String, Integer> ccMap;
+				
+					ccMap = CyclomaticComplexity.GetAllCyclomaticComplexityPerClass(file.getPath());
+				
+				weightedMap.put(file.getName(), WeightedMethodsPerClass.GetWeightedMethodPerClass(ccMap));
+				counter++;
+				System.out.println(counter + " - Computed Weight Value For Class " + file.getName());
+				
+			}
+	
+			//WMPC is weighted methods per class
+			System.out.println("Writing out WMPC to CSV file");
+			String[] headers = new String[] { "Class","WMPC"};
 			
-				ccMap = CyclomaticComplexity.GetAllCyclomaticComplexityPerClass(file.getPath());
-			
-			weightedMap.put(file.getName(), WeightedMethodsPerClass.GetWeightedMethodPerClass(ccMap));
-			counter++;
-			System.out.println(counter + " - Computed Weight Value For Class");
-			
-		}
-		
-		
-		//WMPC is weighted methods per class
-		System.out.println("Writing out WMPC to CSV file");
-		String[] headers = new String[] { "Class","WMPC"};
-		
-		CSVConverter.convertMapToCSV(headers, weightedMap, "WeightedMethodsPerClass", this.outputDirectory);
+			CSVConverter.convertMapToCSV(headers, weightedMap, "WeightedMethodsPerClass", this.outputDirectory);
     	} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -95,6 +95,32 @@ public class ToolKitApplication {
 			e.printStackTrace();
 		}
     }
+    
+    private void PerformTotalLinesOfCodeAnalysis(List<File> filesJava){
+    	try {
+	    	int counter = 0;
+			System.out.println("Calculating Lines Of Code Analysis");
+			Map<String, Integer> locMap = new HashMap<String, Integer>();
+			//Get all weighted methods per class
+			for (File file : filesJava) {
+
+				int val = LinesOfCode.GetTotalLinesOfCode(file);
+				
+				locMap.put(file.getName(), val);
+				counter++;
+				System.out.println(counter + " - Computed Total Lines of Code For Class " + file.getName());
+				
+			}
+	
+			//WMPC is weighted methods per class
+			System.out.println("Writing out Lines of Code to CSV file");
+			String[] headers = new String[] { "Class","LOC"};
+			
+			CSVConverter.convertMapToCSV(headers, locMap, "LinesOfCode", this.outputDirectory);
+    	} catch (IOException e) {
+			e.printStackTrace();
+		}
+    }
 	
 	public static void main(String[] args) throws IOException{
 		//Run Reengineering Analysis (Static & Dynamic)
@@ -108,7 +134,11 @@ public class ToolKitApplication {
 		//app.PerformWeightedMethodsPerClassAnalysis(filesClass);
 		
 		//app.PerformDuplicateFileAnalysis();
-				
+		File rootJava = new File(app.rootDirectoryJava);
+		List<File> filesJava = app.GetAllClasses(rootJava, app.suffixJava);
+		app.PerformTotalLinesOfCodeAnalysis(filesJava);
+		//GetTotalLinesOfCode
+		
 		//testComparisonMatrix
 
         String pathToSourceDirectory; // e.g. "/Users/neilwalkinshaw/Documents/Research/Software/SubjectSystems/commons-compress/commons-compress/src/main"
@@ -124,7 +154,7 @@ public class ToolKitApplication {
         //TablePrinter.printRelations(comparisonMatrix1,new File("detailedComparisons.csv"));
 
         //Run dynamic analysis
-        DynamicAnalysisTracer.RunDynamicAnalysis();
+        //DynamicAnalysisTracer.RunDynamicAnalysis();
 		
 		System.out.println("Analysis Ended");
 	}
