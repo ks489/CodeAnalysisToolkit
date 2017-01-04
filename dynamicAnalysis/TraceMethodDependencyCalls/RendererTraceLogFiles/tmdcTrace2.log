@@ -1,0 +1,14 @@
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.getPaint
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.getPaint
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.getPaint
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.getPaint
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.getPaint
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.getPaint
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.getPaint
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.clone
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.equals
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.equals
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.equals
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.getLowerBound
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.getUpperBound
+org.jfree.chart.renderer.GrayPaintScaleTest->org.jfree.chart.renderer.GrayPaintScale.getAlpha

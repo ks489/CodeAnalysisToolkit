@@ -1,0 +1,14 @@
+org.jfree.chart.renderer.OutlierTest->org.jfree.chart.renderer.Outlier.setPoint
+org.jfree.chart.renderer.OutlierTest->org.jfree.chart.renderer.Outlier.equals
+org.jfree.chart.renderer.OutlierTest->org.jfree.chart.renderer.Outlier.setPoint
+org.jfree.chart.renderer.OutlierTest->org.jfree.chart.renderer.Outlier.setPoint
+org.jfree.chart.renderer.OutlierTest->org.jfree.chart.renderer.Outlier.equals
+org.jfree.chart.renderer.OutlierTest->org.jfree.chart.renderer.Outlier.setPoint
+org.jfree.chart.renderer.OutlierTest->org.jfree.chart.renderer.Outlier.setRadius
+org.jfree.chart.renderer.OutlierTest->org.jfree.chart.renderer.Outlier.equals
+org.jfree.chart.renderer.OutlierTest->org.jfree.chart.renderer.Outlier.setRadius
+org.jfree.chart.renderer.OutlierTest->org.jfree.chart.renderer.Outlier.getX
+org.jfree.chart.renderer.Outlier->org.jfree.chart.renderer.Outlier.getPoint
+org.jfree.chart.renderer.OutlierTest->org.jfree.chart.renderer.Outlier.getY
+org.jfree.chart.renderer.Outlier->org.jfree.chart.renderer.Outlier.getPoint
+org.jfree.chart.renderer.OutlierTest->org.jfree.chart.renderer.Outlier.getRadius

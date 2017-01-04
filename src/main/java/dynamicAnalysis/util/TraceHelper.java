@@ -72,6 +72,7 @@ public class TraceHelper {
      */
 	public List<String> getCsvMethodExecutionAverage(List<String> data){	
 		List<String> methodNameList = new ArrayList<String>();
+		List<String> classNameList = new ArrayList<String>();
 		List<Double> methodTotalExeList = new ArrayList<Double>();
 		List<Integer> methodAmountList = new ArrayList<Integer>();
 		
@@ -83,6 +84,7 @@ public class TraceHelper {
 			
 			if(!methodNameList.contains(items[2])){
 				methodNameList.add(items[2]);
+				classNameList.add(items[1]);
 				methodTotalExeList.add(Double.parseDouble(items[0]));
 				methodAmountList.add(1);				
 			}else{
@@ -96,7 +98,7 @@ public class TraceHelper {
 		for (int i = 0; i < methodNameList.size(); i++) {
 			double totalAmount = methodTotalExeList.get(i);
 			int times = methodAmountList.get(i);
-			returnList.add(totalAmount / times + "," +  methodNameList.get(i));
+			returnList.add(totalAmount / times + "," +  classNameList.get(i)+"."+methodNameList.get(i));
 		}
 		return returnList;
 	}
@@ -139,6 +141,7 @@ public class TraceHelper {
      */
 	public List<String> getCsvMethodExecutionCount(List<String> data){	
 		List<String> methodNameList = new ArrayList<String>();
+		List<String> classNameList = new ArrayList<String>();
 		List<Integer> classCount = new ArrayList<Integer>();
 		
 		List<String> returnList = new ArrayList<String>();
@@ -149,6 +152,7 @@ public class TraceHelper {
 			
 			if(!methodNameList.contains(items[2])){
 				methodNameList.add(items[2]);
+				classNameList.add(items[1]);
 				classCount.add(1);
 				
 			}else{
@@ -158,7 +162,7 @@ public class TraceHelper {
 		}
 		for (int i = 0; i < methodNameList.size(); i++) {
 			int count = classCount.get(i);
-			returnList.add(count + "," +  methodNameList.get(i));
+			returnList.add(count + "," +  classNameList.get(i)+"."+methodNameList.get(i));
 		}
 		return returnList;
 	}

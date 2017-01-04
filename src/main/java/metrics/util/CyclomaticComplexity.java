@@ -27,7 +27,7 @@ public class CyclomaticComplexity {
 	public static Map<String, Integer> GetAllCyclomaticComplexityPerClass(String className) throws IOException{
 		Map<String, Integer> complexityMap = new HashMap<String, Integer>();
 		try {
-			
+		
 			ClassNode cn = new ClassNode(Opcodes.ASM4);
 	        //InputStream in=CFGExtractor.class.getResourceAsStream(className);
 	        InputStream in=new FileInputStream(className);

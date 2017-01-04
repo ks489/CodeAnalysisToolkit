@@ -60,13 +60,18 @@ public class ToolKitApplication {
 	    	int counter = 0;
 			System.out.println("Calculating Weighted Methods PerClass");
 			Map<String, Integer> weightedMap = new HashMap<String, Integer>();
+			Map<String, Integer> averageWeightedMap = new HashMap<String, Integer>();
 			//Get all weighted methods per class
 			for (File file : filesClass) {
 				Map<String, Integer> ccMap;
+				Map<String, Integer> ccMapAverage;
 				
-					ccMap = CyclomaticComplexity.GetAllCyclomaticComplexityPerClass(file.getPath());
+				ccMap = CyclomaticComplexity.GetAllCyclomaticComplexityPerClass(file.getPath());
+				ccMapAverage = CyclomaticComplexity.GetAllCyclomaticComplexityPerClass(file.getPath());
 				
 				weightedMap.put(file.getName(), WeightedMethodsPerClass.GetWeightedMethodPerClass(ccMap));
+				averageWeightedMap.put(file.getName(), WeightedMethodsPerClass.GetWeightedMethodPerClassAverage(ccMapAverage));
+				
 				counter++;
 				System.out.println(counter + " - Computed Weight Value For Class " + file.getName());
 				
@@ -76,7 +81,8 @@ public class ToolKitApplication {
 			System.out.println("Writing out WMPC to CSV file");
 			String[] headers = new String[] { "Class","WMPC"};
 			
-			CSVConverter.convertMapToCSV(headers, weightedMap, "WeightedMethodsPerClass", this.outputDirectory);
+			//CSVConverter.convertMapToCSV(headers, weightedMap, "WeightedMethodsPerClass", this.outputDirectory);
+			CSVConverter.convertMapToCSV(headers, averageWeightedMap, "WeightedMethodsPerClassAverage", this.outputDirectory);
     	} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -131,12 +137,12 @@ public class ToolKitApplication {
 		File rootClass = new File(app.rootDirectoryClass);
 		List<File> filesClass = app.GetAllClasses(rootClass, app.suffixClass);
 		
-		//app.PerformWeightedMethodsPerClassAnalysis(filesClass);
-		
+		//app.PerformWeightedMethodsPerClassAnalysis(filesClass);		
 		//app.PerformDuplicateFileAnalysis();
+		
 		File rootJava = new File(app.rootDirectoryJava);
 		List<File> filesJava = app.GetAllClasses(rootJava, app.suffixJava);
-		app.PerformTotalLinesOfCodeAnalysis(filesJava);
+		//app.PerformTotalLinesOfCodeAnalysis(filesJava);
 		//GetTotalLinesOfCode
 		
 		//testComparisonMatrix
@@ -154,7 +160,7 @@ public class ToolKitApplication {
         //TablePrinter.printRelations(comparisonMatrix1,new File("detailedComparisons.csv"));
 
         //Run dynamic analysis
-        //DynamicAnalysisTracer.RunDynamicAnalysis();
+        DynamicAnalysisTracer.RunDynamicAnalysis();
 		
 		System.out.println("Analysis Ended");
 	}

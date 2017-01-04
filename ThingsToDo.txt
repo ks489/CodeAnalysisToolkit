@@ -2,3 +2,9 @@ Find out largest classes (Lines of code) - > STILL NEED TO DO
 Find out most complex classes (Cyclomatic Complexity) - > DONE and in csv format
 Find out duplicate code (Got the duplication matrix on file comparison) - > PARTIAL just the files and not the detailed
 Find out which classes gets used when executing the system (Dynamic Analysis) - > DONE
+
+
+					wmpcAvg	wmpc	chCount		chTimes		ReCount		ReTimes
+AbstractRenderer	2		281(6)	2234(13)	-(37)		815
+JFreeChart			2		123(24)	32(114)		-(111)
+ChartFactory		1		57(76)	84(83)		-(7)
