@@ -19,3 +19,7 @@ I also had looked at the readme file in the project
 
 dot command
 dot -Tpdf methodCalls.dot -o methodCalls.pdf -Gsize=150,150
+
+
+
+Removed createHighLowChart Duplicate
