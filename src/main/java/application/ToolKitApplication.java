@@ -88,8 +88,8 @@ public class ToolKitApplication {
 			System.out.println("Writing out WMPC to CSV file");
 			String[] headers = new String[] { "Class","WMPC"};
 			
-			//CSVConverter.convertMapToCSV(headers, weightedMap, "WeightedMethodsPerClass", this.outputDirectory);
-			CSVConverter.convertMapToCSV(headers, averageWeightedMap, "WeightedMethodsPerClassAverage", this.outputDirectory);
+			CSVConverter.convertMapToCSV(headers, weightedMap, "WeightedMethodsPerClass", this.outputDirectory);
+			//CSVConverter.convertMapToCSV(headers, averageWeightedMap, "WeightedMethodsPerClassAverage", this.outputDirectory);
     	} catch (IOException e) {
 			e.printStackTrace();
 		}

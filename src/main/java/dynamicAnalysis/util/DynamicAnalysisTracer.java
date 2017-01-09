@@ -18,12 +18,12 @@ public class DynamicAnalysisTracer {
 		String callFileDirectory = "./dynamicAnalysis/TraceMethodDependencyCalls/TraceLogFiles/";
 		
 		//Refactored Directories
-		String executionFileDirectoryRefactor = "./dynamicAnalysis/TraceMethodTimeExecution/TraceLogFiles/";
-		String callFileDirectoryRefactor = "./dynamicAnalysis/TraceMethodDependencyCalls/TraceLogFiles/";
+		String executionFileDirectoryRefactor = "./dynamicAnalysis/TraceMethodTimeExecution/RefactoredLogFiles/";
+		String callFileDirectoryRefactor = "./dynamicAnalysis/TraceMethodDependencyCalls/RefactoredLogFiles/";
 		
 		//Renderer Test Cases
-		String executionFileDirectoryRenderer = "./dynamicAnalysis/TraceMethodTimeExecution/RefactoredLogFiles/";
-		String callFileDirectoryRenderer = "./dynamicAnalysis/TraceMethodDependencyCalls/RefactoredLogFiles/";
+		String executionFileDirectoryRenderer = "./dynamicAnalysis/TraceMethodTimeExecution/RendererTraceLogFiles/";
+		String callFileDirectoryRenderer = "./dynamicAnalysis/TraceMethodDependencyCalls/RendererTraceLogFiles/";
 		
 		//Merges all trace files
 		TraceMergeHelper merger = new TraceMergeHelper();
