@@ -36,6 +36,13 @@ public class ToolKitApplication {
     //Java root directory for windows
     String rootDirectoryJava = "../../jfreechart-fse/src/main/java";
     
+    //Refactored directories
+    //Java root directory for mac
+    //String rootDirectoryJava = "/Users/AppleZa-Laptop/Projects/University/co7506/jfreechart-fse/src/main/java";
+    //Java root directory for windows
+    String rootDirectoryClassRefactor = "../../jfreechart-fse/target/classes/org/jfree/chart/charttypes";
+    String rootDirectoryJavaRefactor = "../../jfreechart-fse/src/main/java/org/jfree/chart/charttypes";
+    
     String outputDirectory = "./outputfiles/";
 	
 	public List<File> GetAllClasses(File root, String suffix){
@@ -127,6 +134,24 @@ public class ToolKitApplication {
 			e.printStackTrace();
 		}
     }
+    
+    private void RefactoredAnalysis(ToolKitApplication app){
+    	//rootDirectoryJavaRefactor
+    	System.out.println("Starting Refactored Analysis");
+    	File rootClass = new File(app.rootDirectoryClassRefactor);
+    	List<File> filesClass = app.GetAllClasses(rootClass, app.suffixClass);
+    	//app.PerformWeightedMethodsPerClassAnalysis(filesClass);	
+    	System.out.println("Done with Weighted Per Class Analysis on Refactored Code");
+    	
+    	
+    	File rootJava = new File(app.rootDirectoryJavaRefactor);
+		List<File> filesJava = app.GetAllClasses(rootJava, app.suffixJava);
+		//app.PerformTotalLinesOfCodeAnalysis(filesJava);
+		System.out.println("Done with Total Lines of Code Analysis on Refactored Code");
+		DynamicAnalysisTracer.RunDynamicAnalysis();
+		System.out.println("Done with Dynamic Analysis on Refactored Code");
+    	System.out.println("Refactored Analysis complete");
+    }
 	
 	public static void main(String[] args) throws IOException{
 		//Run Reengineering Analysis (Static & Dynamic)
@@ -134,14 +159,14 @@ public class ToolKitApplication {
 		ToolKitApplication app = new ToolKitApplication();
 		
 		//Get all classes
-		File rootClass = new File(app.rootDirectoryClass);
-		List<File> filesClass = app.GetAllClasses(rootClass, app.suffixClass);
+		//File rootClass = new File(app.rootDirectoryClass);
+		//List<File> filesClass = app.GetAllClasses(rootClass, app.suffixClass);
 		
 		//app.PerformWeightedMethodsPerClassAnalysis(filesClass);		
 		//app.PerformDuplicateFileAnalysis();
 		
-		File rootJava = new File(app.rootDirectoryJava);
-		List<File> filesJava = app.GetAllClasses(rootJava, app.suffixJava);
+		//File rootJava = new File(app.rootDirectoryJava);
+		//List<File> filesJava = app.GetAllClasses(rootJava, app.suffixJava);
 		//app.PerformTotalLinesOfCodeAnalysis(filesJava);
 		//GetTotalLinesOfCode
 		
@@ -160,8 +185,8 @@ public class ToolKitApplication {
         //TablePrinter.printRelations(comparisonMatrix1,new File("detailedComparisons.csv"));
 
         //Run dynamic analysis
-        DynamicAnalysisTracer.RunDynamicAnalysis();
-		
+        //DynamicAnalysisTracer.RunDynamicAnalysis();
+		app.RefactoredAnalysis(app);
 		System.out.println("Analysis Ended");
 	}
 	

@@ -1,0 +1,4 @@
+25018,org.jfree.chart.util.HashUtils,hashCodeForDoubleArray
+21169,org.jfree.chart.util.HashUtils,hashCodeForDoubleArray
+6094,org.jfree.chart.util.HashUtils,hashCodeForDoubleArray
+6132862,org.jfree.chart.HashUtilitiesTest,testHashCodeForDoubleArray
