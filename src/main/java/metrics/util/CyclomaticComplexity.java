@@ -33,17 +33,17 @@ public class CyclomaticComplexity {
 	        ClassReader classReader=new ClassReader(in);
 	        classReader.accept(cn, 0);
 	        for(MethodNode mn : (List<MethodNode>)cn.methods){
-	    			Graph graph = CFGExtractor.getCFG(cn.name, mn);
-	
-	        	    int totalEdges = 0;
-	        	    for (Node node : graph.getNodes()) {
-	        			for (Node succ: graph.getSuccessors(node)) {
-	        				totalEdges++;
-	        			}
-	        		}
-	        	    int totalNodes = graph.getNodes().size();
-	        		int cc = totalEdges - totalNodes + 2;
-	        		complexityMap.put(cn.name + "." + mn.name + ",", cc);
+    			Graph graph = CFGExtractor.getCFG(cn.name, mn);
+
+        	    int totalEdges = 0;
+        	    for (Node node : graph.getNodes()) {
+        			for (Node succ: graph.getSuccessors(node)) {
+        				totalEdges++;
+        			}
+        		}
+        	    int totalNodes = graph.getNodes().size();
+        		int cc = totalEdges - totalNodes + 2;
+        		complexityMap.put(cn.name + "." + mn.name + ",", cc);
 	    	}
 
 		} catch (AnalyzerException e) {
