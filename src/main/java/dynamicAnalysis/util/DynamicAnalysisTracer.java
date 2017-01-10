@@ -7,6 +7,10 @@ import java.util.List;
  */
 public class DynamicAnalysisTracer {
 	
+	/**
+     * This runs the dynamic analysis on the project. It will fetch all trace files and merge them. It will perform certain calculations on some traces.
+     * It will then convert these files into CSV files ready for analysis
+     */
 	public static void RunDynamicAnalysis(){
 		
 		//Chart Test Cases
@@ -27,17 +31,16 @@ public class DynamicAnalysisTracer {
 		
 		//Merges all trace files
 		TraceMergeHelper merger = new TraceMergeHelper();
-		//merger.mergeTraceFiles(executionFileDirectory);
-		//merger.mergeTraceFiles(callFileDirectory);
+		merger.mergeTraceFiles(executionFileDirectory);
+		merger.mergeTraceFiles(callFileDirectory);
 		
-		//merger.mergeTraceFiles(executionFileDirectoryRenderer);
-		//merger.mergeTraceFiles(callFileDirectoryRenderer);
+		merger.mergeTraceFiles(executionFileDirectoryRenderer);
+		merger.mergeTraceFiles(callFileDirectoryRenderer);
 		
 		//Refactored
 		merger.mergeTraceFiles(executionFileDirectoryRenderer);
-		//merger.mergeTraceFiles(callFileDirectoryRenderer);
-		
-		
+		merger.mergeTraceFiles(callFileDirectoryRenderer);
+				
 		String[] methodHeaders = new String[] {
 			"ExecutionTime",
 			"Method"
@@ -48,11 +51,11 @@ public class DynamicAnalysisTracer {
 		};
 
 		TraceHelper tHelper = new TraceHelper();
-		//List<String> csvData = tHelper.getFileRecords(executionInputFileName, executionFileDirectory);
-		//List<String> csvDataRenderer = tHelper.getFileRecords(executionInputFileName, executionFileDirectoryRenderer);
+		List<String> csvData = tHelper.getFileRecords(executionInputFileName, executionFileDirectory);
+		List<String> csvDataRenderer = tHelper.getFileRecords(executionInputFileName, executionFileDirectoryRenderer);
 		
 		List<String> csvDataRefactor = tHelper.getFileRecords(executionInputFileName, executionFileDirectoryRefactor);
-		//List<String> csvDataRendererRefactor = tHelper.getFileRecords(executionInputFileName, callFileDirectoryRenderer);
+		List<String> csvDataRendererRefactor = tHelper.getFileRecords(executionInputFileName, callFileDirectoryRenderer);
 		
 		List<String> methodExecutionTimesRefactor = tHelper.getCsvMethodExecutionAverage(csvDataRefactor);
 		List<String> classExecutionTimesRefactor = tHelper.GetCsvClassExecutionAverage(csvDataRefactor);
@@ -60,30 +63,30 @@ public class DynamicAnalysisTracer {
 		List<String> classCountRefactor = tHelper.GetCsvClassExecutionCount(csvDataRefactor);
 		
 		//Sort out list for graph outputs for method / classes execution times and call counts for the charts
-		//List<String> methodExecutionTimes = tHelper.getCsvMethodExecutionAverage(csvData);
-		//List<String> classExecutionTimes = tHelper.GetCsvClassExecutionAverage(csvData);
-		//List<String> methodCount = tHelper.getCsvMethodExecutionCount(csvData);
-		//List<String> classCount = tHelper.GetCsvClassExecutionCount(csvData);
+		List<String> methodExecutionTimes = tHelper.getCsvMethodExecutionAverage(csvData);
+		List<String> classExecutionTimes = tHelper.GetCsvClassExecutionAverage(csvData);
+		List<String> methodCount = tHelper.getCsvMethodExecutionCount(csvData);
+		List<String> classCount = tHelper.GetCsvClassExecutionCount(csvData);
 		
-		//List<String> methodExecutionTimesRenderer = tHelper.getCsvMethodExecutionAverage(csvDataRenderer);
-		//List<String> classExecutionTimesRenderer = tHelper.GetCsvClassExecutionAverage(csvDataRenderer);
-		//List<String> methodCountRenderer = tHelper.getCsvMethodExecutionCount(csvDataRenderer);
-		//List<String> classCountRenderer = tHelper.GetCsvClassExecutionCount(csvDataRenderer);
+		List<String> methodExecutionTimesRenderer = tHelper.getCsvMethodExecutionAverage(csvDataRenderer);
+		List<String> classExecutionTimesRenderer = tHelper.GetCsvClassExecutionAverage(csvDataRenderer);
+		List<String> methodCountRenderer = tHelper.getCsvMethodExecutionCount(csvDataRenderer);
+		List<String> classCountRenderer = tHelper.GetCsvClassExecutionCount(csvDataRenderer);
 		
 		TraceConverterHelper converter = new TraceConverterHelper();
-		//converter.convertLogToCSV(methodHeaders, methodExecutionTimes, "methodTimes", executionFileDirectory);
-		//converter.convertLogToCSV(classHeaders, classExecutionTimes, "classTimes", executionFileDirectory);
+		converter.convertLogToCSV(methodHeaders, methodExecutionTimes, "methodTimes", executionFileDirectory);
+		converter.convertLogToCSV(classHeaders, classExecutionTimes, "classTimes", executionFileDirectory);
 		
-		//converter.convertLogToCSV(methodHeaders, methodCount, "methodCount", executionFileDirectory);
-		//converter.convertLogToCSV(classHeaders, classCount, "classCount", executionFileDirectory);
-		//converter.convertLogToDigraph(callInputFileName, callOutputFileName, callFileDirectory);
+		converter.convertLogToCSV(methodHeaders, methodCount, "methodCount", executionFileDirectory);
+		converter.convertLogToCSV(classHeaders, classCount, "classCount", executionFileDirectory);
+		converter.convertLogToDigraph(callInputFileName, callOutputFileName, callFileDirectory);
 		
-		//converter.convertLogToCSV(methodHeaders, methodExecutionTimesRenderer, "methodTimesRenderer", executionFileDirectoryRenderer);
-		//converter.convertLogToCSV(classHeaders, classExecutionTimesRenderer, "classTimesRenderer", executionFileDirectoryRenderer);
+		converter.convertLogToCSV(methodHeaders, methodExecutionTimesRenderer, "methodTimesRenderer", executionFileDirectoryRenderer);
+		converter.convertLogToCSV(classHeaders, classExecutionTimesRenderer, "classTimesRenderer", executionFileDirectoryRenderer);
 		
-		//converter.convertLogToCSV(methodHeaders, methodCountRenderer, "methodCountRenderer", executionFileDirectoryRenderer);
-		//converter.convertLogToCSV(classHeaders, classCountRenderer, "classCountRenderer", executionFileDirectoryRenderer);
-		//converter.convertLogToDigraph(callInputFileName, callOutputFileName, callFileDirectoryRenderer);
+		converter.convertLogToCSV(methodHeaders, methodCountRenderer, "methodCountRenderer", executionFileDirectoryRenderer);
+		converter.convertLogToCSV(classHeaders, classCountRenderer, "classCountRenderer", executionFileDirectoryRenderer);
+		converter.convertLogToDigraph(callInputFileName, callOutputFileName, callFileDirectoryRenderer);
 		
 		//Refactored
 		//converter.convertLogToDigraph(callInputFileName, callOutputFileName, callFileDirectoryRenderer);	

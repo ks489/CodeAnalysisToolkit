@@ -10,6 +10,9 @@ import java.util.Map;
 
 public class CSVConverter {
 	
+	/**
+     * Converts a map into a CSV file
+     */
 	public static void convertMapToCSV(String[] headers, Map<String, Integer> ccMap,  String outputFileName, String fileDirectory){
 		try {
 

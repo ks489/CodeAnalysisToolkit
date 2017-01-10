@@ -23,34 +23,35 @@ import dynamicAnalysis.util.*;
 public class ToolKitApplication {
 	
 	List<File> files;
-	//String suffix = "";
     String suffixClass = ".class";
-    String suffixJava = ".java";
-    //Class root directory for mac
-    //String rootDirectoryClass = "/Users/AppleZa-Laptop/Projects/University/co7506/jfreechart-fse/target/classes";
-    //Class root directory for windows
-    String rootDirectoryClass = "../../jfreechart-fse/target/classes";
-    
-    //Java root directory for mac
-    //String rootDirectoryJava = "/Users/AppleZa-Laptop/Projects/University/co7506/jfreechart-fse/src/main/java";
-    //Java root directory for windows
-    String rootDirectoryJava = "../../jfreechart-fse/src/main/java";
-    
+    String suffixJava = ".java";    
+    //Class root directories
+    String rootDirectoryClass = "../../jfreechart-fse/target/classes";    
+    //Java root directories
+    String rootDirectoryJava = "../../jfreechart-fse/src/main/java";    
     //Refactored directories
-    //Java root directory for mac
-    //String rootDirectoryJava = "/Users/AppleZa-Laptop/Projects/University/co7506/jfreechart-fse/src/main/java";
-    //Java root directory for windows
     String rootDirectoryClassRefactor = "../../jfreechart-fse/target/classes/org/jfree/chart/charttypes";
     String rootDirectoryJavaRefactor = "../../jfreechart-fse/src/main/java/org/jfree/chart/charttypes";
     
     String outputDirectory = "./outputfiles/";
 	
+    /**
+     * Gets all class files within a directory
+     * @param The root file
+     * @param suffix of the file to be retrieved
+     * @return a list of files within the directory
+     */
 	public List<File> GetAllClasses(File root, String suffix){
 		files = new ArrayList<File>();
         populateFiles(root, suffix);
         return files;
 	}
 	
+	/**
+     * Populates a list of files
+     * @param The root file
+     * @param suffix of the file to be retrieved
+     */
     private void populateFiles(File root, String suffix) {
         ArrayList<File> files = new ArrayList<File>(Arrays.asList(root.listFiles()));
         for(File f: files) {
@@ -62,6 +63,10 @@ public class ToolKitApplication {
         }
     }
     
+    /**
+     * Performs a Weighted Methods Per Class Analysis. It will do a normal MPCA and an average MPCA
+     * @param List of files
+     */
     private void PerformWeightedMethodsPerClassAnalysis(List<File> filesClass){
     	try {
 	    	int counter = 0;
@@ -73,28 +78,33 @@ public class ToolKitApplication {
 				Map<String, Integer> ccMap;
 				Map<String, Integer> ccMapAverage;
 				
+				//Cyclomatic Complexity
 				ccMap = CyclomaticComplexity.GetAllCyclomaticComplexityPerClass(file.getPath());
 				ccMapAverage = CyclomaticComplexity.GetAllCyclomaticComplexityPerClass(file.getPath());
 				
+				//Populate the maps with the cc per class
 				weightedMap.put(file.getName(), WeightedMethodsPerClass.GetWeightedMethodPerClass(ccMap));
 				averageWeightedMap.put(file.getName(), WeightedMethodsPerClass.GetWeightedMethodPerClassAverage(ccMapAverage));
 				
 				counter++;
-				System.out.println(counter + " - Computed Weight Value For Class " + file.getName());
-				
+				System.out.println(counter + " - Computed Weight Value For Class " + file.getName());				
 			}
-	
 			//WMPC is weighted methods per class
 			System.out.println("Writing out WMPC to CSV file");
 			String[] headers = new String[] { "Class","WMPC"};
 			
+			//Prints out the Weighted Methods Per Class
 			CSVConverter.convertMapToCSV(headers, weightedMap, "WeightedMethodsPerClass", this.outputDirectory);
-			//CSVConverter.convertMapToCSV(headers, averageWeightedMap, "WeightedMethodsPerClassAverage", this.outputDirectory);
+			//Prints out the Weighted Methods Per Class Average
+			CSVConverter.convertMapToCSV(headers, averageWeightedMap, "WeightedMethodsPerClassAverage", this.outputDirectory);
     	} catch (IOException e) {
 			e.printStackTrace();
 		}
     }
     
+    /**
+     * This will perform a duplicate file analysis
+     */
     private void PerformDuplicateFileAnalysis(){
     	try {
 	    	System.out.println("Performing Duplicate File Analysis");
@@ -109,6 +119,10 @@ public class ToolKitApplication {
 		}
     }
     
+    /**
+     * This will get all the lines of code for a list of files
+     * @param A list of files
+     */
     private void PerformTotalLinesOfCodeAnalysis(List<File> filesJava){
     	try {
 	    	int counter = 0;
@@ -116,16 +130,12 @@ public class ToolKitApplication {
 			Map<String, Integer> locMap = new HashMap<String, Integer>();
 			//Get all weighted methods per class
 			for (File file : filesJava) {
-
-				int val = LinesOfCode.GetTotalLinesOfCode(file);
-				
+				//Gets the lines of code for a file
+				int val = LinesOfCode.GetTotalLinesOfCode(file);				
 				locMap.put(file.getName(), val);
 				counter++;
-				System.out.println(counter + " - Computed Total Lines of Code For Class " + file.getName());
-				
+				System.out.println(counter + " - Computed Total Lines of Code For Class " + file.getName());				
 			}
-	
-			//WMPC is weighted methods per class
 			System.out.println("Writing out Lines of Code to CSV file");
 			String[] headers = new String[] { "Class","LOC"};
 			
@@ -135,18 +145,22 @@ public class ToolKitApplication {
 		}
     }
     
+    /**
+     * this performs all analysis for the refactored part of the system
+     * @param ToolKitApplication
+     */
     private void RefactoredAnalysis(ToolKitApplication app){
     	//rootDirectoryJavaRefactor
     	System.out.println("Starting Refactored Analysis");
     	File rootClass = new File(app.rootDirectoryClassRefactor);
     	List<File> filesClass = app.GetAllClasses(rootClass, app.suffixClass);
-    	//app.PerformWeightedMethodsPerClassAnalysis(filesClass);	
+    	app.PerformWeightedMethodsPerClassAnalysis(filesClass);	
     	System.out.println("Done with Weighted Per Class Analysis on Refactored Code");
     	
     	
     	File rootJava = new File(app.rootDirectoryJavaRefactor);
 		List<File> filesJava = app.GetAllClasses(rootJava, app.suffixJava);
-		//app.PerformTotalLinesOfCodeAnalysis(filesJava);
+		app.PerformTotalLinesOfCodeAnalysis(filesJava);
 		System.out.println("Done with Total Lines of Code Analysis on Refactored Code");
 		DynamicAnalysisTracer.RunDynamicAnalysis();
 		System.out.println("Done with Dynamic Analysis on Refactored Code");
@@ -159,34 +173,23 @@ public class ToolKitApplication {
 		ToolKitApplication app = new ToolKitApplication();
 		
 		//Get all classes
-		//File rootClass = new File(app.rootDirectoryClass);
-		//List<File> filesClass = app.GetAllClasses(rootClass, app.suffixClass);
+		File rootClass = new File(app.rootDirectoryClass);
+		List<File> filesClass = app.GetAllClasses(rootClass, app.suffixClass);
 		
-		//app.PerformWeightedMethodsPerClassAnalysis(filesClass);		
-		//app.PerformDuplicateFileAnalysis();
+		app.PerformWeightedMethodsPerClassAnalysis(filesClass);		
+		app.PerformDuplicateFileAnalysis();
 		
-		//File rootJava = new File(app.rootDirectoryJava);
-		//List<File> filesJava = app.GetAllClasses(rootJava, app.suffixJava);
-		//app.PerformTotalLinesOfCodeAnalysis(filesJava);
-		//GetTotalLinesOfCode
-		
-		//testComparisonMatrix
-
-        String pathToSourceDirectory; // e.g. "/Users/neilwalkinshaw/Documents/Research/Software/SubjectSystems/commons-compress/commons-compress/src/main"
-        String pathToFileA = ""; //e.g. "/Users/neilwalkinshaw/Documents/Research/Software/SubjectSystems/commons-compress/commons-compress/src/main/java/org/apache/commons/compress/archivers/zip/X0015_CertificateIdForFile.java"
-        String pathToFileB = "";//e.g. ""/Users/neilwalkinshaw/Documents/Research/Software/SubjectSystems/commons-compress/commons-compress/src/main/java/org/apache/commons/compress/archivers/zip/X0016_CertificateIdForCentralDirectory.java"
-
-
-        //testDetailedComparisonMatrix
-        //File from = new File(pathToFileA);
-        //File to = new File(pathToFileB);
-        //FileComparator fc = new FileComparator(from,to);
-        //boolean[][] comparisonMatrix1 = fc.detailedCompare();
-        //TablePrinter.printRelations(comparisonMatrix1,new File("detailedComparisons.csv"));
+		//Gets total lines of code analysis
+		File rootJava = new File(app.rootDirectoryJava);
+		List<File> filesJava = app.GetAllClasses(rootJava, app.suffixJava);
+		app.PerformTotalLinesOfCodeAnalysis(filesJava);
 
         //Run dynamic analysis
-        //DynamicAnalysisTracer.RunDynamicAnalysis();
+        DynamicAnalysisTracer.RunDynamicAnalysis();
+        
+        //Refactored Analysis
 		app.RefactoredAnalysis(app);
+		
 		System.out.println("Analysis Ended");
 	}
 	
